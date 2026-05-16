@@ -1,0 +1,71 @@
+  services:
+  
+    postgres:
+      image: postgres:15-alpine
+      container_name: app-postgres
+      ports:
+        - "5432:5432"
+      networks:
+        - internal-network
+      restart: unless-stopped
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+        - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      environment:
+        POSTGRES_USER: ${DB_ROOT_USERNAME}
+        POSTGRES_PASSWORD: ${DB_ROOT_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+        
+      healthcheck:
+        test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
+        interval: 10s
+        timeout: 5s
+        start_period: 10s
+        retries: 5
+
+    auth-service:
+      image: fitnes.auth-service:latest
+      networks:
+        - internal-network
+      expose:
+        - "8081"
+      build:
+        context: ./auth-service
+        dockerfile: Dockerfile
+      restart: unless-stopped
+      
+      environment:
+        SPRING_PROFILES_ACTIVE: dev
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}?currentSchema=auth_data
+        SPRING_DATASOURCE_USERNAME: ${DB_AUTH_USERNAME}
+        SPRING_DATASOURCE_PASSWORD: ${DB_AUTH_PASSWORD}
+
+      depends_on:
+        - postgres
+      labels:
+        amplicode.image: springboot
+  
+    gateway-service:
+      image: fitnes.gateway-service:latest
+      build:
+        context: ./gateway-service
+        dockerfile: Dockerfile
+      restart: unless-stopped
+      ports:
+        - "9090:9090"
+      environment:
+        - JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
+      depends_on:
+        - auth-service
+      networks:
+        - internal-network
+      labels:
+        amplicode.image: springboot
+  
+  networks:
+    internal-network:
+      driver: bridge
+  
+  volumes:
+    postgres_data:

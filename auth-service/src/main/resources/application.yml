@@ -1,0 +1,63 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  private-key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDO2C30hCsqILln
+    +BUajdUR3Prgmi73OJy+GMITHVB1MWeS72AXpya51hDzqzz19lSIIsyjAUHQ74yt
+    ct33FX+FkSc+85KBa7R50ugVKr/Ed6pf4IyypoDcWM4iSDDWqITokz+N+QP8aK1r
+    lGeIv7Yw5OQaeQEWZ08B4+p6nftKSnn8IyNOA+9nedyVyrm+txVJBvq8kSEszeWI
+    RHMvjkgzJZbPPajl6n/rcr52UYNWEXQBbB8DBbjOh3SR0qhI40WduXVA4h8AjPh9
+    6v8DN/OB7dXgwDBxSt5CQSW/9wmxa2oY0sAonFOHphWLpHEqlyuCv3G20yv9TuhA
+    rhyskwERAgMBAAECggEBAJu8qN0xpk5R1UcywrD7mTGZ8EqrzDDXryxx963spGeY
+    iyNWmEM21zGUu667f2qxzXOyv+D7UVK/CmyN0BH5XcpzP9lmCyjmrzwKUDOfvENw
+    1hbaOxVHyD4fnxSwxhTZTTjPpUp/80BYkDovwsRzk/m8XQKRmQAFSLdjo2gvCsUj
+    c42sPTuSDdSrUcFIA3b44LaxWNlJ1+laqxXIRLs4wKOsZo7BvGd7lGHDMyVonofe
+    vo9r/rgG4PGC/X8sL16tF/Pam9uFo8pxRwA2GcuS5Jjaw/ZioctHjEjyBwRnJRe/
+    dJW+8ak4EA/b0EI2r6iwiV7ivm2dIXsY5xQnh94qVAECgYEA7KUlXRUhIxK+tbd4
+    mMZMi4N4nMvo68y/7X3weTinrDxFr1GfxyFxZY7unbWMAeDImLrVo2Ru+WO8eeGy
+    IDr/IJfeWkjwDSNBHghghSj8QH/U0xBHr+f30VOzCupZud9H7NfGA7idEjv15yv2
+    J1abnmIfGGO3LVyIbRtPlPwA590CgYEA38MR+NE2FyuYFrMFvF5ey0Sh4GAKkWpq
+    1UHX/URHQNbD9csaq26EaeXbWFMOM4KUhwfxuDH746YKfIDC/N/sKYAdblxg+TXX
+    N9Yts/M8cgi94i+QnYR2H8W5L81n+IBEoQEIDJT3/DDlze1snlWkTEzj7qf3uXBT
+    wE7MSebDpMUCgYB9Ws38DOFMzvUvFU1QwFpz3OTbSjjMD93rVDc6P4SyfAr93+Mf
+    fNuwzJIiALV1mTkpjm706pLOkMKaXbAZ2qajAU/Ly689hltMKWvXneph0FVQqOMQ
+    j3R68jd5pMJ674gOMg62kejCa/jKyELQe9Rbheaq6Mdzw/yQr1LsvMFOEQKBgQCz
+    q3+vydVj73Y0q9TsNt5o2xgcASIbN1bHHBKhY4TPNGOu5kHo61nZal6g4jfh9nTq
+    o99cpo36ciWzaPSodei8Pgnjxrt6/9drF0glWSbs7cYCa2z0fhsXUf1ru8RDTkNN
+    AHYFHEyvLFgp7P2teVjuh0LyK98HAIHPRbZVlLz9fQKBgGsWCZl1XMbKkaSxxAYR
+    k6sN48l45E3WVldeMfxnSzoEAbXIRsvF3k0shQIylRiq8bBAx9x0qOurKNcB4fHF
+    NwVRA1SOg3EjTioY9beWSYrLA/zipnF/JvOaixrf1l9ZL8fr6qgB/1Fu5z3Xnjs5
+    MSyr7pThmGKh40spxfgaDyPt
+    -----END PRIVATE KEY-----
+  public-key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAztgt9IQrKiC5Z/gVGo3V
+    Edz64Jou9zicvhjCEx1QdTFnku9gF6cmudYQ86s89fZUiCLMowFB0O+MrXLd9xV/
+    hZEnPvOSgWu0edLoFSq/xHeqX+CMsqaA3FjOIkgw1qiE6JM/jfkD/Gita5RniL+2
+    MOTkGnkBFmdPAePqep37Skp5/CMjTgPvZ3nclcq5vrcVSQb6vJEhLM3liERzL45I
+    MyWWzz2o5ep/63K+dlGDVhF0AWwfAwW4zod0kdKoSONFnbl1QOIfAIz4fer/Azfz
+    ge3V4MAwcUreQkElv/cJsWtqGNLAKJxTh6YVi6RxKpcrgr9xttMr/U7oQK4crJMB
+    EQIDAQAB
+    -----END PUBLIC KEY-----
